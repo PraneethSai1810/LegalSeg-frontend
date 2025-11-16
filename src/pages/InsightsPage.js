@@ -12,6 +12,7 @@ import {
 import { jsPDF } from "jspdf";
 import { getAllRoles, getRoleById } from "../utils/constants";
 import axios from "axios";
+import api from"../utils/api";
 
 export default function InsightsPage() {
   const navigate = useNavigate();
@@ -36,12 +37,8 @@ useEffect(() => {
       if (!id) return;
 
       const token = localStorage.getItem("token");
-      const { data } = await axios.get(
-        `http://localhost:5000/api/cases/predictions/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const { data } = await api.get(`/cases/predictions/${id}`);
+
 
       console.log("🧩 Prediction title from backend:", data.prediction.title);
       console.log("Insights received:", data.prediction);

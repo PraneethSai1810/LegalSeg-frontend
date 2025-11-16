@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useDocumentTitle} from "../hooks/useDocumentTitle";
+import api from "../utils/api";
 
 
 export default function Login() {
@@ -160,7 +161,7 @@ const handleSignUp = async (e) => {
   const userData = { name: fullName, email, password };
 
   try {
-    const res = await axios.post("http://localhost:5000/api/auth/register", userData);
+    const res = await api.post("/auth/register", userData);
 
     // ✅ Store everything in localStorage
     localStorage.setItem("token", res.data.token);
@@ -172,7 +173,7 @@ const handleSignUp = async (e) => {
   } catch (err) {
     const errorMessage =
       err.response?.data?.message || "Signup failed. Please try again.";
-    toast.error(errorMessage);
+    toast.error(err.response?.data?.message || "Signup failed");
   }
 };
 
@@ -181,8 +182,10 @@ const handleSignUp = async (e) => {
 
 
 const handleGoogleSignUp = () => {
-  window.location.href = "http://localhost:5000/api/auth/google";
+  const backendBase = process.env.REACT_APP_API_URL.replace("/api", "");
+  window.location.href = `${backendBase}/api/auth/google`;
 };
+
 
   const passwordStrength = password ? getPasswordStrength(password) : null;
 

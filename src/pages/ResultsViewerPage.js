@@ -110,7 +110,7 @@ const handleCopyToClipboard = () => {
         try {
           setLoading(true);
           const token = localStorage.getItem("token");
-          const res = await axios.get(`http://localhost:5000/api/cases/predictions/${id}`, {
+          const res = await axios.get(`${process.env.REACT_APP_API_URL}/cases/predictions/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
 

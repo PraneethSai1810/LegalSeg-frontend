@@ -62,7 +62,7 @@ export default function ForgotPassword() {
       setStep(3);
     } else if (step === 3 && newPassword && confirmPassword) {
       if (newPassword !== confirmPassword) {
-        toast.success("Passwords do not match!");
+       toast.error("Passwords do not match!");
         return;
       }
       await resetPassword(email, newPassword);
@@ -70,7 +70,8 @@ export default function ForgotPassword() {
       navigate("/signin");
     }
   } catch (err) {
-    toast.success(err.response?.data?.message || "Something went wrong.");
+    toast.error(err.response?.data?.message || "Something went wrong.");
+
   }
 };
 

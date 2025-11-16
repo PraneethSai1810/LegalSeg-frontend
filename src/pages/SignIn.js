@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
+import api from "../utils/api"; 
 
 export default function SignIn({ onClose }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -118,7 +119,7 @@ const handleSignIn = async (e) => {
   const loginData = { email, password };
 
   try {
-    const res = await axios.post("http://localhost:5000/api/auth/login", loginData);
+    const res = await api.post("/auth/login", loginData);
     const result = res.data;
 
     const user = result.user || {};
@@ -137,12 +138,14 @@ const handleSignIn = async (e) => {
   } catch (err) {
     const errorMessage =
       err.response?.data?.message || "Invalid credentials. Please try again.";
-    toast.error(errorMessage);
+    toast.error(err.response?.data?.message || "Invalid credentials");
   }
 };
 const handleGoogleSignIn = () => {
-  window.location.href = "http://localhost:5000/api/auth/google";
+  const backendBase = process.env.REACT_APP_API_URL.replace("/api", "");
+  window.location.href = `${backendBase}/api/auth/google`;
 };
+
 
   return (
     <div

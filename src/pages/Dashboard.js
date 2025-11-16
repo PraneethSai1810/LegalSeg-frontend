@@ -56,7 +56,7 @@ const [history, setHistory] = useState([]);
       localStorage.setItem("isAuthenticated", "true");
 
       // Optionally fetch user profile with this token
-      fetch("http://localhost:5000/api/auth/profile", {
+      fetch(`${process.env.REACT_APP_API_URL}/auth/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => res.json())

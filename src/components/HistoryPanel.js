@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import { ChevronLeft, FileText, History } from "lucide-react";
 
 export default function HistoryPanel({
@@ -16,9 +16,8 @@ useEffect(() => {
   const fetchPredictions = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/cases/predictions/all", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await api.get("/cases/predictions/all");
+
 
       const formattedDocs = res.data.predictions.map((item) => ({
         id: item._id,
